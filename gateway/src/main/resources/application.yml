@@ -1,0 +1,27 @@
+server:
+  port: 80
+spring:
+  application:
+    name: api-gateway-config
+  cloud:
+    gateway:
+      routes:
+        - id: product_route
+#          uri: http://localhost:7070
+          uri: lb://customer-7070
+          order: 1
+          predicates:
+            - Path=/kk/**
+#            - Before=2021-03-18T17:32:58.129+08:00
+#            - Method=GET
+#            - Age=18,23
+#            - Query=xxx,123
+          filters:
+            - StripPrefix=1
+            - Log=true,false
+      discovery:
+        locator:
+          enabled: true
+    nacos:
+      discovery:
+        server-addr: localhost:8848
